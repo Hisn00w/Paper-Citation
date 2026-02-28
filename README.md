@@ -1,6 +1,6 @@
 # Paper Citation Skill / 文献引用检索技能
 
-[![GitHub](https://img.shields.io/github/license/Hisn00w/Paper-Citation)](LICENSE)
+[![License](https://img.shields.io/badge/License-Non--Commercial-red)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/Hisn00w/Paper-Citation)](https://github.com/Hisn00w/Paper-Citation/stargazers)
 
 **English** | [中文](#中文)
