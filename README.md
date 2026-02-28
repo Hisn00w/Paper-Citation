@@ -48,6 +48,30 @@ Virtual reality is transforming museum exhibitions[CITE]. Immersive experiences 
 Find 3 papers on digital twins from SCI Q1 journals in the last 5 years, output BibTeX format
 ```
 
+### Presentation Slides
+
+Below is an 8-slide presentation showcasing the Paper Citation Skill:
+
+| Slide | Title |
+|:-----:|-------|
+| 1 | Cover |
+| 2 | Features Overview |
+| 3 | Input Modes |
+| 4 | Workflow |
+| 5 | Journal Rankings |
+| 6 | Output Formats |
+| 7 | Usage Example |
+| 8 | Installation |
+
+![Slide 1 - Cover](assets/slides/slide-01.png)
+![Slide 2 - Features](assets/slides/slide-02.png)
+![Slide 3 - Input Modes](assets/slides/slide-03.png)
+![Slide 4 - Workflow](assets/slides/slide-04.png)
+![Slide 5 - Journal Rankings](assets/slides/slide-05.png)
+![Slide 6 - Output Formats](assets/slides/slide-06.png)
+![Slide 7 - Usage Example](assets/slides/slide-07.png)
+![Slide 8 - Installation](assets/slides/slide-08.png)
+
 ### Documentation
 
 - [SKILL.md](paper-citation/SKILL.md) - Detailed workflow documentation
