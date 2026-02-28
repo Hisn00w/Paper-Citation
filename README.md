@@ -1,4 +1,4 @@
-# Paper Citation for Claude Code / Claude Code 文献引用技能
+# Paper Citation Skill / 文献引用检索技能
 
 [![GitHub](https://img.shields.io/github/license/Hisn00w/Paper-Citation)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/Hisn00w/Paper-Citation)](https://github.com/Hisn00w/Paper-Citation/stargazers)
@@ -9,7 +9,7 @@
 
 ## English
 
-An intelligent academic paper citation retrieval skill for [Claude Code](https://claude.ai/code). Supports semantic search, journal quality assessment, and multi-format citation output.
+An intelligent academic paper citation retrieval skill for AI coding assistants like [Claude Code](https://claude.ai/code), [Codex](https://github.com/features/copilot), and other LLM-powered development tools. Supports semantic search, journal quality assessment, and multi-format citation output.
 
 ### Features
 
@@ -83,7 +83,7 @@ Below is an 8-slide presentation showcasing the Paper Citation Skill:
 
 ## 中文
 
-适用于 [Claude Code](https://claude.ai/code) 的智能学术文献引用检索技能。支持语义搜索、期刊等级评估和多格式引用输出。
+适用于 [Claude Code](https://claude.ai/code)、[Codex](https://github.com/features/copilot) 等 AI 编程助手的智能学术文献引用检索技能。支持语义搜索、期刊等级评估和多格式引用输出。
 
 ### 功能特点
 
