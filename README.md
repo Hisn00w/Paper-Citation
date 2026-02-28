@@ -2,6 +2,8 @@
 
 [![License](https://img.shields.io/badge/License-Non--Commercial-red)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/Hisn00w/Paper-Citation)](https://github.com/Hisn00w/Paper-Citation/stargazers)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-blue)](https://claude.ai/code)
+[![Codex](https://img.shields.io/badge/Codex-Compatible-green)](https://openai.com/codex)
 
 **English** | [中文](#中文)
 
