@@ -1,6 +1,6 @@
 # Paper Citation Skill / 文献引用检索技能
 
-智能文献引用检索工具 - 支持语义搜索、期刊等级评估和多格式输出。
+智能文献引用检索工具 - 支持语义搜索、期刊等级评估和6种引用格式输出（GB/T 7714、APA、IEEE、MLA、BibTeX、LaTeX）。
 
 ---
 
@@ -43,12 +43,10 @@ cd ~/.claude/skills              # macOS/Linux
 
 ## 功能特点
 
-## 功能特点
-
 - **三种输入模式**：直接文本查询、[CITE]标记替换、带约束条件搜索
 - **双API检索**：Semantic Scholar + OpenAlex，覆盖更全
 - **智能评分**：综合考虑被引量、期刊等级、语义相关性和发表年份
-- **多格式输出**：GB/T 7714-2015、BibTeX、LaTeX \cite{}格式
+- **六种引用格式**：GB/T 7714-2015、APA 7th、IEEE、MLA 9th、BibTeX、LaTeX \cite{}
 - **期刊等级速查**：内置HCI/设计学/文化遗产等方向期刊等级
 
 ## 使用方式
@@ -93,7 +91,50 @@ cd ~/.claude/skills              # macOS/Linux
 - **年份范围**：近5年、2020-2024、近10年等
 - **期刊等级**：SCI Q1/Q2/Q3/Q4、SSCI、CSSCI、北大核心
 - **数量限制**：需要N篇、推荐3-5篇等
-- **输出格式**：GB/T 7714、BibTeX、LaTeX cite格式
+- **输出格式**：GB/T 7714、APA、IEEE、MLA、BibTeX、LaTeX cite格式
+
+## 引用格式说明
+
+### GB/T 7714-2015（中国标准）
+适用于中文学术论文、学位论文。
+```
+[1] SMITH J, JOHNSON A. Title of Paper[J]. Journal Name, 2023, 45(3): 123-145.
+```
+
+### APA 7th Edition（美国心理学会）
+适用于社会科学、心理学、教育学等领域。
+```
+Smith, J. A., & Johnson, B. C. (2023). Title of article. Journal Name, 45(3), 123-145.
+```
+
+### IEEE格式（电气电子工程师学会）
+适用于工程技术、计算机科学等领域。
+```
+[1] J. A. Smith and B. C. Johnson, "Title of paper," IEEE Trans. Journal, vol. 45, no. 3, pp. 123-145, 2023.
+```
+
+### MLA 9th Edition（现代语言协会）
+适用于人文学科、文学研究等领域。
+```
+Smith, John A., and Barbara C. Johnson. "Title of Article." Journal Name, vol. 45, no. 3, 2023, pp. 123-145.
+```
+
+### BibTeX
+适用于LaTeX文档管理。
+```bibtex
+@article{smith2023,
+  title={Title of Paper},
+  author={Smith, John and Johnson, Alice},
+  journal={Journal Name},
+  year={2023}
+}
+```
+
+### LaTeX \cite{}
+用于LaTeX文档内联引用。
+```latex
+\cite{smith2023}
+```
 
 ## 工作流程
 
@@ -158,6 +199,24 @@ paper-citation/
 
 ```
 用户：找5篇关于数字人文在文化遗产保护中应用的高被引论文，输出BibTeX
+```
+
+### 示例4：APA格式输出
+
+```
+用户：找关于机器学习在教育评估中应用的文献，输出APA格式
+```
+
+### 示例5：IEEE格式输出
+
+```
+用户：找关于区块链在供应链管理中应用的论文，3篇，用IEEE格式
+```
+
+### 示例6：MLA格式输出
+
+```
+用户：找关于数字档案管理的研究，输出MLA格式
 ```
 
 ---

@@ -1,13 +1,13 @@
 ---
 name: paper-citation
-description: 当用户需要查找学术论文引用、搜索相关文献参考资料或生成引用格式（GB/T 7714、BibTeX、LaTeX cite格式）时使用此技能。当用户提供描述研究概念的文字、在文档中标记[CITE]位置，或要求带有特定约束条件（年份限制、期刊质量、引用格式）的引用推荐时使用。
+description: 当用户需要查找学术论文引用、搜索相关文献参考资料或生成引用格式（GB/T 7714、APA、IEEE、MLA、BibTeX、LaTeX cite格式）时使用此技能。当用户提供描述研究概念的文字、在文档中标记[CITE]位置，或要求带有特定约束条件（年份限制、期刊质量、引用格式）的引用推荐时使用。
 ---
 
 # 文献引用检索 (Paper Citation)
 
 ## 概述
 
-此技能用于智能学术文献引用检索和格式化。支持三种输入模式：直接文本查询、文档中[CITE]标记替换、以及带约束条件的自然语言指令。技能通过语义搜索跨多个学术数据库（Semantic Scholar、OpenAlex），按被引量和期刊质量排序，并输出GB/T 7714-2015、BibTeX或LaTeX \cite{}格式的引用。
+此技能用于智能学术文献引用检索和格式化。支持三种输入模式：直接文本查询、文档中[CITE]标记替换、以及带约束条件的自然语言指令。技能通过语义搜索跨多个学术数据库（Semantic Scholar、OpenAlex），按被引量和期刊质量排序，并输出多种引用格式：GB/T 7714-2015（中国标准）、APA（第7版）、IEEE、MLA（第9版）、BibTeX或LaTeX \cite{}格式。
 
 ## 何时使用此技能
 
@@ -54,7 +54,10 @@ description: 当用户需要查找学术论文引用、搜索相关文献参考�
     │       └── 通过DOI从CrossRef/doi.org获取
     │
     └── 步骤6：格式化输出
-            └── GB/T 7714-2015格式
+            └── GB/T 7714-2015格式（中国标准）
+            └── APA 7th格式（美国心理学会）
+            └── IEEE格式（电气电子工程师学会）
+            └── MLA 9th格式（现代语言协会）
             └── BibTeX格式
             └── LaTeX \cite{key1,key2}格式
 ```
@@ -272,7 +275,82 @@ curl -s -LH "Accept: application/x-bibtex" "https://doi.org/{DOI}"
 [3] 作者. 论文标题[C]//会议名称. 地点: 出版社, 年份: 页码.
 ```
 
-### 格式2：BibTeX
+### 格式2：APA 7th Edition（美国心理学会）
+
+**期刊论文：**
+```
+Smith, J. A., & Johnson, B. C. (2023). Title of the article in sentence case. Journal Name in Title Case, 45(3), 123-145. https://doi.org/10.xxxx/xxxxx
+```
+
+**会议论文：**
+```
+Lee, S. M. (2024, May). Title of conference paper. In A. Editor & B. Chair (Eds.), Proceedings of Conference Name (pp. 56-67). Publisher. https://doi.org/10.xxxx/xxxxx
+```
+
+**书籍章节：**
+```
+Brown, K. L. (2022). Chapter title. In R. Editor (Ed.), Book Title (3rd ed., pp. 112-134). Publisher.
+```
+
+**APA格式要点：**
+- 作者：姓在前，名首字母在后，& 连接最后两位作者
+- 年份：放在括号内
+- 标题：句子大小写（仅首单词和专有名词大写）
+- 期刊名：标题大小写，斜体，卷号斜体，期号不斜体
+- DOI：以 https://doi.org/ 开头
+
+### 格式3：IEEE格式（电气电子工程师学会）
+
+**期刊论文：**
+```
+[1] J. A. Smith and B. C. Johnson, "Title of paper in sentence case," IEEE Trans. Journal Name, vol. 45, no. 3, pp. 123-145, Mar. 2023, doi: 10.xxxx/xxxxx.
+```
+
+**会议论文：**
+```
+[2] S. M. Lee et al., "Title of conference paper," in Proc. IEEE Conf. Name (CONF), City, Country, May 2024, pp. 56-67.
+```
+
+**书籍：**
+```
+[3] K. L. Brown, Book Title in Title Case. City, State: Publisher, 2022.
+```
+
+**IEEE格式要点：**
+- 作者：名首字母 + 姓，et al. 表示三位及以上作者
+- 标题：双引号内，句子大小写
+- 期刊名：斜体，通常缩写（如 IEEE Trans. Pattern Anal. Mach. Intell.）
+- 卷号：vol. 前缀，斜体
+- 期号：no. 前缀
+- 页码：pp. 前缀
+- 使用数字编号 [1], [2], [3]
+
+### 格式4：MLA 9th Edition（现代语言协会）
+
+**期刊论文：**
+```
+Smith, John A., and Barbara C. Johnson. "Title of Article in Title Case." Journal Name in Title Case, vol. 45, no. 3, 2023, pp. 123-145. Database, doi:10.xxxx/xxxxx.
+```
+
+**会议论文：**
+```
+Lee, Samuel M. "Title of Conference Paper." Proceedings of Conference Name, edited by Alice Editor, Publisher, 2024, pp. 56-67.
+```
+
+**书籍：**
+```
+Brown, Karen L. Book Title in Title Case. Publisher, 2022.
+```
+
+**MLA格式要点：**
+- 作者：全名，姓在前，and 连接作者
+- 标题：文章用双引号，期刊/书籍用斜体
+- 期刊名：斜体，后接卷号、期号、年份
+- 页码：pp. 前缀
+- 容器概念：期刊、数据库等作为容器
+- DOI：前缀 doi:（不加 https://）
+
+### 格式5：BibTeX
 
 ```bibtex
 @inproceedings{smith2023example,
@@ -285,12 +363,23 @@ curl -s -LH "Accept: application/x-bibtex" "https://doi.org/{DOI}"
 }
 ```
 
-### 格式3：LaTeX \cite{}
+### 格式6：LaTeX \cite{}
 
 用于[CITE]替换模式：
 - 将每个`[CITE]`替换为`\cite{key1,key2,...}`
 - 引用键由第一作者姓氏+年份派生（如`smith2023`）
 - 在末尾提供参考文献部分
+
+### 格式选择指南
+
+| 格式 | 适用场景 | 特点 |
+|------|----------|------|
+| GB/T 7714-2015 | 中国学术论文、学位论文 | 中文学术标准，支持中英文 |
+| APA 7th | 社会科学、心理学、教育学 | 作者-年份制，强调时效性 |
+| IEEE | 工程技术、计算机科学 | 数字编号，期刊名缩写 |
+| MLA | 人文学科、文学研究 | 作者-页码制，强调原文 |
+| BibTeX | LaTeX文档管理 | 数据库格式，便于管理 |
+| LaTeX cite | LaTeX文档引用 | 与BibTeX配合使用 |
 
 ## 资源文件
 
@@ -348,6 +437,32 @@ curl -s -LH "Accept: application/x-bibtex" "https://doi.org/{DOI}"
 2. 应用期刊过滤：仅SCI-Q1
 3. 搜索"digital twin"
 4. 以BibTeX格式返回前3篇
+
+### 示例4：指定国际引用格式
+
+用户："找关于大语言模型在医疗应用的文献，输出APA格式"
+
+处理流程：
+1. 搜索"large language models healthcare medical application"
+2. 按综合得分排序
+3. 以APA 7th格式返回引用
+
+### 示例5：IEEE格式用于工程领域
+
+用户："找关于边缘计算在物联网中应用的论文，3篇，用IEEE格式"
+
+处理流程：
+1. 搜索"edge computing IoT Internet of Things"
+2. 筛选高被引工程类论文
+3. 以IEEE编号格式返回引用
+
+### 示例6：MLA格式用于人文研究
+
+用户："找关于数字人文在档案管理中应用的研究，输出MLA格式"
+
+处理流程：
+1. 搜索"digital humanities archival management"
+2. 以MLA 9th格式返回引用
 
 ## 重要提示
 
