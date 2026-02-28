@@ -133,4 +133,18 @@ git clone https://github.com/Hisn00w/Paper-Citation.git paper-citation
 
 ## License
 
-MIT License
+**Non-Commercial License** - 禁止商业盈利活动
+
+本项目仅供学术、教育和个人非商业用途。严禁将本技能用于任何商业盈利活动，包括但不限于：
+- 销售本软件或其衍生作品
+- 在商业产品或服务中使用
+- 提供商业化的文献检索服务
+- 任何以盈利为目的的使用
+
+详见 [LICENSE](LICENSE) 文件。
+
+---
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Hisn00w/Paper-Citation&type=Date)](https://star-history.com/#Hisn00w/Paper-Citation&Date)
