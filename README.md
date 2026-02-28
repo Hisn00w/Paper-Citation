@@ -17,8 +17,9 @@ An intelligent academic paper citation retrieval skill for AI coding assistants 
 
 - **Three Input Modes**: Direct text query, [CITE] marker replacement, constrained search
 - **Dual API Search**: Semantic Scholar + OpenAlex for comprehensive coverage
-- **Intelligent Ranking**: Considers citation count, journal tier, semantic relevance, and publication year
-- **Multi-format Output**: GB/T 7714-2015, BibTeX, LaTeX `\cite{}` formats
+- **Chinese Database Fallback**: CNKI, Wanfang, VIP, Baidu Scholar support for Chinese journals
+- **Intelligent Ranking**: Time-normalized citation count × influential citation multiplier + journal tier + recency
+- **Multi-format Output**: GB/T 7714-2015, APA 7th, IEEE, MLA 9th, BibTeX, LaTeX `\cite{}` formats
 - **Journal Rankings**: Built-in rankings for HCI, AI/ML/Deep Learning, LLMs/NLP, Computer Systems, Cyber Security, Design Studies, Cultural Heritage, and Chinese computer journals
 
 ### Installation
@@ -91,8 +92,9 @@ Below is an 8-slide presentation showcasing the Paper Citation Skill:
 
 - **三种输入模式**：直接文本查询、[CITE]标记替换、带约束条件搜索
 - **双API检索**：Semantic Scholar + OpenAlex，覆盖更全
-- **智能评分**：综合考虑被引量、期刊等级、语义相关性和发表年份
-- **多格式输出**：GB/T 7714-2015、BibTeX、LaTeX `\cite{}` 格式
+- **中文数据库回退**：知网、万方、维普、百度学术等中文期刊检索支持
+- **智能评分**：时间归一化被引量 × 高影响力引用加成 + 期刊等级 + 时效性
+- **六种引用格式**：GB/T 7714-2015、APA 7th、IEEE、MLA 9th、BibTeX、LaTeX cite格式
 - **期刊等级速查**：内置人机交互、AI/机器学习/深度学习、大语言模型/NLP、计算机系统、网络安全、设计学、文化遗产、中文计算机期刊等领域期刊等级
 
 ### 安装

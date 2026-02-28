@@ -45,9 +45,12 @@ cd ~/.claude/skills              # macOS/Linux
 
 - **三种输入模式**：直接文本查询、[CITE]标记替换、带约束条件搜索
 - **双API检索**：Semantic Scholar + OpenAlex，覆盖更全
-- **智能评分**：综合考虑被引量、期刊等级、语义相关性和发表年份
+- **中文数据库回退**：知网、万方、维普等中文期刊检索支持
+- **智能评分**：时间归一化被引量 + 高影响力引用乘数 + 期刊等级 + 时效性
 - **六种引用格式**：GB/T 7714-2015、APA 7th、IEEE、MLA 9th、BibTeX、LaTeX \cite{}
 - **期刊等级速查**：内置HCI/设计学/文化遗产等方向期刊等级
+
+---
 
 ## 使用方式
 
@@ -139,12 +142,85 @@ Smith, John A., and Barbara C. Johnson. "Title of Article." Journal Name, vol. 4
 ## 工作流程
 
 1. **解析输入**：识别[CITE]标记，提取查询内容
-2. **查询优化**：翻译为英文，生成2-3个检索变体
-3. **语义检索**：调用Semantic Scholar和OpenAlex API
+2. **查询优化**：翻译为英文，生成2-3个检索变体；保留中文查询用于中文数据库
+3. **语义检索**：
+   - 优先调用 Semantic Scholar 和 OpenAlex API
+   - 中文语境下启用知网/万方/维普检索回退
 4. **期刊评估**：查询期刊等级（本地缓存+联网搜索）
-5. **智能评分**：综合多维度指标排序
+5. **智能评分**：时间归一化被引量 × 高影响力引用加成 + 期刊等级 + 时效性
 6. **获取BibTeX**：通过DOI从CrossRef获取官方引用
 7. **格式化输出**：按指定格式生成引用
+
+## 智能评分机制
+
+### 时间归一化被引量
+为避免新论文因发表时间短而被低估，采用**年均被引量**：
+```
+发表年数 = max(1, 当前年份 - 发表年份 + 1)
+年均被引量 = 总被引量 / 发表年数
+被引量得分 = min(100, 20 × log10(年均被引量 × 2 + 1))
+```
+
+**示例对比：**
+| 论文 | 年份 | 总被引 | 年均被引 | 说明 |
+|------|------|--------|----------|------|
+| 经典论文A | 2018 | 500 | 62.5 | 老论文总量高但年均适中 |
+| 新论文B | 2024 | 80 | 40.0 | 新论文总量低但年均接近 |
+
+### 高影响力引用加成
+Semantic Scholar 的 influentialCitationCount 作为质量乘数应用于最终得分：
+
+| 高影响力引用数 | 加成系数 | 说明 |
+|----------------|----------|------|
+| ≥ 50 | × 1.30 | 领域里程碑论文 |
+| 20-49 | × 1.20 | 重要影响论文 |
+| 10-19 | × 1.10 | 显著影响论文 |
+| 5-9 | × 1.05 | 一定影响论文 |
+| 0-4 | × 1.00 | 基础水平 |
+
+**完整评分公式：**
+```
+基础得分 = (被引量得分 × 0.30) + (期刊得分 × 0.25) + (相关性得分 × 0.25) + (时效性得分 × 0.20)
+最终得分 = 基础得分 × 高影响力加成系数
+```
+
+## 中文数据库检索回退
+
+当用户明确要求中文期刊（CSSCI、北大核心等）或涉及纯中文语境概念时：
+
+**触发条件：**
+- 用户指定"核心期刊"、"CSSCI"、"北大核心"
+- 查询涉及纯中文概念（如"双减政策"、"乡村振兴"、仅在中国研究的课题）
+- 英文API返回结果不足
+
+**检索策略：**
+1. **保留中文查询词**：如果用户明确要求中文期刊，保留一组中文查询词作为变体
+2. **使用 WebSearch 检索**：知网（CNKI）、万方、维普、百度学术等平台
+3. **优先返回 CSSCI/北大核心期刊论文**
+4. **与英文API结果合并去重**
+
+**搜索查询模板：**
+```
+site:cnki.net "查询关键词" CSSCI
+site:wanfangdata.com.cn "查询关键词" 核心期刊
+"查询关键词" 知网 核心期刊
+"查询关键词" 百度学术
+```
+
+## 本地缓存写入规范
+
+发现新期刊等级时，使用**追加模式**写入 `references/venue-rankings.md`：
+
+```markdown
+| Venue | Full Name | Rank | Notes |
+|-------|-----------|------|-------|
+| NewJournal | New Journal Name | SCI-Q2 | Added on 2024-XX-XX |
+```
+
+**规则：**
+- ✅ 在现有表格后追加新行
+- ❌ 禁止删除或修改已有条目
+- ❌ 禁止覆盖整个文件
 
 ## 文件结构
 
@@ -155,6 +231,23 @@ paper-citation/
 ├── references/
 │   ├── venue-rankings.md       # 期刊等级速查表
 │   └── api-reference.md        # API接口文档
+```
+
+### 本地缓存写入规范
+
+当发现新的期刊等级信息时，**必须使用追加模式**写入 `references/venue-rankings.md`：
+
+**写入规则：**
+- ✅ **必须**：在现有表格后追加新行，保持表格结构完整
+- ✅ **必须**：保持表头格式一致（`| Venue | Full Name | Rank | Notes |`）
+- ❌ **禁止**：删除或修改已有期刊条目
+- ❌ **禁止**：覆盖整个文件内容
+
+**追加模板示例：**
+```markdown
+| JUS | Journal of Usability Studies | C | UPA journal |
+| CHI EA | CHI Extended Abstracts | C | Workshop papers |
+| **NewJournal** | **New Journal Name** | **SCI-Q2** | **Added 2024** |  ← 追加到此处
 ```
 
 ## 预存期刊领域
@@ -225,7 +318,7 @@ paper-citation/
 
 ### Semantic Scholar API
 ```bash
-curl -s "https://api.semanticscholar.org/graph/v1/paper/search?query={QUERY}&limit=20&fields=title,authors,year,citationCount,venue,externalIds,abstract"
+curl -s "https://api.semanticscholar.org/graph/v1/paper/search?query={QUERY}&limit=20&fields=title,authors,year,citationCount,influentialCitationCount,venue,externalIds,abstract"
 ```
 
 ### OpenAlex API
